@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="root" style="border: 1px dotted green">
+    <p style="color: blue">Parágrafo criado em HTML.</p>
+  </div>
+
+  <script>
+    const root = document.getElementById('root')
+
+    // Criando um novo elemento HTML <p>
+    const parag = document.createElement('p')
+
+    // Ajustar os atributos do novo elemento
+    parag.textContent = 'Parágrafo criado com JavaScript.'
+    parag.style.color = 'blue'
+
+    // Colocar o novo elemento dentro da div "root"
+    root.appendChild(parag)
+
+    // Criando um novo elemento HTML <div>
+    const novaDiv = document.createElement('div')
+
+    // Ajustando alguns atributos da nova div
+    novaDiv.textContent = "Isto é uma div."
+    novaDiv.style.border = "2px solid red"
+    novaDiv.style.backgroundColor = "yellow"
+
+    // Colocando a nova div dentro da div "root"
+    root.appendChild(novaDiv)
+
+    const div2 = document.createElement('div')
+    div2.textContent = 'Div fora do root'
+    div2.style.backgroundColor = 'aqua'
+
+    document.body.appendChild(div2)
+
+  </script>
+
+</body>
+</html>
