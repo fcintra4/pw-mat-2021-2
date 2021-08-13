@@ -8,7 +8,7 @@
 </head>
 <body>
   
-  <div id="root"></div>
+  <div id="root" style="border: 1px solid red"></div>
 
   <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
@@ -20,7 +20,7 @@
     // Os atributos dos elementos HTML são chamados pelo React de PROPS
     // e podem ser representados por meio de um objeto
     const props = {
-      id: 'div1',
+      id: 'minhaDiv',
       children: 'Meu primeiro elemento feito em React',  // textContent
       style: {backgroundColor: 'limegreen', border: '2px solid blue'}
     }
@@ -28,8 +28,29 @@
     // Criando o elemento usando React
     const primeiraDiv = React.createElement('div', props)
 
-    // Colocando a primeira div dentro da div "root"
-    ReactDOM.render(primeiraDiv, root)
+    // Criando um parágrafo com props diretamente no createElement
+    const parag = React.createElement('p', {
+      children: 'Parágrafo criado com React',
+      style: { color: 'blue' }
+    })
+
+    // Criando uma div de forma rápida usando React.createElement
+    // com três parâmetros
+    // 1º parâmetro: tipo de elemento
+    // 2º parâmetro: props (se não existirem, pode ser null)
+    // 3º parâmetro: children
+    const segundaDiv = React.createElement('div', null, 'Div criada rapidamente no React')
+
+    // Criando uma div container, que contém os demais elementos
+    // dentro dela
+    const container = React.createElement('div', null, [
+      primeiraDiv,
+      parag,
+      segundaDiv
+    ])
+
+    // Colocando o container dentro da div "root"
+    ReactDOM.render(container, root)
     
   </script>
 

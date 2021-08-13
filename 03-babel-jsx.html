@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .formata {
+      font-family: 'Courier New', monospace;
+      color: blue;
+      background-color: powderblue;
+      text-align: center;
+    }
+    .classe2 {
+      border-radius: 6px;
+      border: 2px solid tomato;
+      background-color: lightcoral;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="root" style="border: 1px dotted red"></div>
+
+  <p class="formata">Parágrafo criado em HTML.</p>
+
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel"> // Habilitando a biblioteca Babel
+    
+    // O atributo HTML "class", quando usado em uma prop React,
+    // precisa ser renomeado para "className"
+    /*const novaDiv = React.createElement('div', {
+      children: 'Div React',
+      className: 'formata'
+    })*/
+
+    // A biblioteca Babel permite usar uma sintaxe chamada JSX 
+    // (JavaScript eXtended), que se assemelha à sintaxe do HTML
+    // usada diretamente dentro de um script JS
+    const novaDiv = <div className="formata">Div React com Babel</div>
+
+    const className = 'classe2'
+    const children = 'Meu teste de JSX'
+    const props = { className, children }   // Propriedades abreviadas
+
+    // Usando JSX com interpolação de {variáveis}
+    const div2 = <div className={className}>{children}</div>
+
+    // Usando JSX com interpolação e espalhamento
+    const div3 = <div {...props}></div>
+
+    /*const container = React.createElement('div', null, [
+      novaDiv, div2, div3
+    ])*/
+    
+    /*const container =
+      <div>
+        {novaDiv}
+        {div2}
+        {div3}
+      </div>
+    */
+
+    const container =
+      <div>
+        <div className="formata">Div React com Babel</div>
+        <div className={className}>{children}</div>
+        <div {...props}></div>
+      </div>
+
+    ReactDOM.render(container, document.getElementById('root'))
+  </script>
+
+</body>
+</html>
