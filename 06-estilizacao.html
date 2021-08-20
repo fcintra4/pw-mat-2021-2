@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="06.css">
+</head>
+<body>
+
+  <div id="root"></div>
+
+  <hr>
+
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <div class="box box--medium" style="background-color: yellow; font-style: italic">Box médio feito em HTML</div>
+
+  <script type="text/babel">
+
+    const box = <div className="box">Box</div>
+
+    /* Podemos aplicar mais de uma classe em um componente
+      usando o atributo className */
+
+    /*
+      Regras para uso do atributo style em JSX
+      1) style não pode ser string, deve ser um objeto representando
+        as regras a serem aplicadas, entre chaves duplas {{}}.
+      2) o nome das regras não pode ter hífen, como em CSS. Usa-se
+        camelCase em vez disso. Por exemplo, background-color em CSS
+        torna-se backgroundColor em JSX.
+      3) os valores de propriedades não numéricas devem vir entre
+        aspas.
+    */
+    const smallBox = 
+      <div className="box box--small" style={ { backgroundColor: 'lightblue', fontStyle: 'italic'} }>
+        Small Box
+      </div>
+    
+    const mediumBox = 
+      <div className="box box--medium" style={ { backgroundColor: 'pink', color: 'blue', fontWeight: 'bold' } }>
+        Medium Box
+      </div>
+
+    let estilo = {
+      backgroundColor: 'orange',
+      fontSize: '30px',
+      fontFamily: '"Courier New", monospace'
+    }
+
+    const largeBox = <div className="box box--large" style={estilo}>Large Box</div>
+
+    /* Componente que tem tanto props personalizadas (style e size)
+      quanto props padrão (...props). Se o valor da prop size não
+      for passado, usará 'small' como padrão. 
+    */
+    const BoxItalic = ({style, size = 'small', ...props}) => 
+      (
+        <div className={`box box--${size}`} style={{ fontStyle: 'italic', ...style} } {...props} />
+      )
+
+    const container = 
+      <>
+        {box}
+        {smallBox}
+        {mediumBox}
+        {largeBox}
+        <BoxItalic id="box1" size="medium" style={{ backgroundColor: 'tomato'}}>Box médio via componente</BoxItalic>
+        <BoxItalic id="box2" size="large">Box grande via componente</BoxItalic>
+        <BoxItalic id="box3" style={{ backgroundColor: 'limegreen', fontWeight: 'bold'}}>Box pq comp.</BoxItalic>
+      </>
+
+    ReactDOM.render(container, document.getElementById('root'))
+
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+
+    const MeuForm = () => {
+
+      
+
+      /*
+        Variáveis de estado são variáveis especiais que preservam
+        seu valor mesmo quando o React redesenha o componente devido
+        a alguma alteração de conteúdo.
+
+        Variáveis estado são criadas por meio do hook setState().
+      */
+
+      //let nome
+
+      // nome -> é a variável de estado (somente leitura)
+      // setNome -> é uma função que deve ser usada para mudar
+      //            o valor da variável de estado nome
+      let [nome, setNome] = React.useState()
+
+      function handleChange(event) {
+        // nome = event.target.value
+
+        // Armazenado o nome convertido para letras maiúsculas
+        //nome = event.target.value.toUpperCase()
+        setNome(event.target.value.toUpperCase())
+      }
+
+      function handleSubmit(event) {
+        event.preventDefault()
+        alert(`Olá, ${nome}!`)
+      }
+
+      return (
+        <form onSubmit={handleSubmit}>
+          {/*
+            Em JSX, o atributo HTML "for" passa a ser "htmlFor"
+            já que "for" é uma palavra reservada do JavaScript.
+          */}
+          <label htmlFor="campo-nome">Informe seu nome:</label><br />
+          <input id="campo-nome" onChange={handleChange} value={nome} /><br />
+          <div>Variável nome: {nome}</div>
+          <button type="submit">Enviar</button>
+        </form>
+      )
+    
+    }
+
+    ReactDOM.render(<MeuForm />, document.getElementById('root'))
+
+  </script>
+
+</body>
+</html>
