@@ -32,8 +32,10 @@
 
       // nome -> é a variável de estado (somente leitura)
       // setNome -> é uma função que deve ser usada para mudar
-      //            o valor da variável de estado nome
-      let [nome, setNome] = React.useState()
+      //            o valor da variável de estado 
+      // Dentro dos parênteses do useState(), DEVE ser informado
+      // um valor inicial para a variável de estado
+      let [nome, setNome] = React.useState('')
 
       function handleChange(event) {
         // nome = event.target.value
@@ -41,6 +43,8 @@
         // Armazenado o nome convertido para letras maiúsculas
         //nome = event.target.value.toUpperCase()
         setNome(event.target.value.toUpperCase())
+
+        // setNome(document.getElementById('campo-nome').value.toUpperCase())
       }
 
       function handleSubmit(event) {
