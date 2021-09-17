@@ -10,7 +10,14 @@ function Board() {
   // Variável que guarda o estado de cada posição do tabuleiro
   // A inicialização é feita com um lazy initializer, para acontecer
   // apenas uma vez, no carregamento da página
-  const [squares, setSquares] = React.useState(() => Array(9).fill(null))
+
+  console.log('Estado salvo: ', window.localStorage.getItem('jogo-velha'))
+
+  const [squares, setSquares] = React.useState(
+    // O valor salvo em localStorage está no formato de string.
+    // Para transformá-lo novamente em vetor, usamos JSON.parse
+    () => JSON.parse(window.localStorage.getItem('jogo-da-velha')) || Array(9).fill(null)
+  )
 
   // 🐨 We'll need the following bits of derived state:
   // - nextValue ('X' or 'O')
@@ -72,6 +79,14 @@ function Board() {
       </button>
     )
   }
+
+  // Usando useEffect() para armazenar o estado do jogo no
+  // cache do navegador
+  React.useEffect(() => {
+    // O estado "squares" é transformado em string para ser 
+    // salvo de forma correta no localStorage
+    window.localStorage.setItem('jogo-da-velha', JSON.stringify(squares))
+  }, [squares])
 
   return (
     <div>
