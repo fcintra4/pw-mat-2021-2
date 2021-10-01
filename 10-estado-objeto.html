@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+
+    function Teste() {
+
+      const [carro, setCarro] = React.useState({
+        marca: 'Fiat',
+        modelo: 'Tempra',
+        cor: 'roxo'
+      })
+      // Criando variáveis avulsas (somente leitura) a partir
+      // da variável de estado de objeto, via desestruturação
+      const {marca, modelo, cor} = carro
+
+      function handleChange() {
+        // Alterar apenas o modelo do carro
+        
+        /*
+        // Cópia por espalhamento (forma moderna)
+        let carroTemp = {...carro} // Tira uma cópia do carro
+        
+        // Cópia por Object.assign() (forma clássica)
+        //let carroTemp = Object.assign({}, carro)
+
+        carroTemp.modelo = 'Palio'
+        carroTemp.cor = 'verde'
+        setCarro(carroTemp)
+        */
+
+        // Cópia + mudança de propriedade, integradas
+        setCarro({...carro, modelo: 'Palio', cor: 'verde'})
+
+      }
+
+      return (
+        <>
+          <button onClick={handleChange}>Alterar carro</button>
+          <div>
+            Marca: {marca}<br />
+            Modelo: {modelo}<br />
+            Cor: {cor}
+          </div>
+        </>
+      )
+    }
+
+    ReactDOM.render(<Teste />, document.getElementById('root'))
+  
+  </script>
+  
+</body>
+</html>

@@ -10,8 +10,26 @@ import {PokemonForm, fetchPokemon, PokemonInfoFallback, PokemonDataView} from '.
 
 function PokemonInfo({pokemonName}) {
   // 🐨 Have state for the pokemon (null)
-  const [pokemon, setPokemon] = React.useState(null)
-  const [error, setError] = React.useState(null)
+  // [pokemon, setPokemon] = React.useState(null)
+  //const [error, setError] = React.useState(null)
+
+  /*
+    Valores possíveis para status:
+    - 'idle' (ocioso): ainda não foi feita requisição ao servidor remoto
+    - 'pending' (pendente): a requisição foi feita e aguardamos a resposta
+    - 'resolved' (resolvido): a requisição retornou com informações sobre um pokémon
+    - 'rejected' (rejeitado): a requisição retornou erro
+  */
+  //const [status, setStatus] = React.useState('idle')
+
+  // Juntando as variáveis de estado em um único objeto
+  const [state, setState] = React.useState({
+    pokemon: null,
+    error: null,
+    status: 'idle'
+  })
+  // Constantes avulsas somente-leitura
+  const {pokemon, error, status} = state
 
   // 🐨 use React.useEffect where the callback should be called whenever the
   // pokemon name changes.
@@ -33,10 +51,11 @@ function PokemonInfo({pokemonName}) {
     if(! pokemonName) return
 
     // Limpar os dados do pokemon
-    setPokemon(null)
+    //setPokemon(null)
 
     // Limpar o erro
-    setError(null)
+    //setError(null)
+    setState({...state, pokemon: null, error: null})
 
     // Chama a função fetchPokemon, passando o nome do pokemon.
     // Isso irá chamar a API no servidor remoto, que, se tudo der
@@ -49,12 +68,43 @@ function PokemonInfo({pokemonName}) {
 
     // then() é executado quando a API retorna dados (requisição deu certo)
     // catch() é executado quando a API retorna erro (requisição deu errado)
+
+    //setStatus('pending') // Iniciando a requisição
+    setState({...state, status: 'pending'})
+
     fetchPokemon(pokemonName)
-      .then(pokemonData => setPokemon(pokemonData))
-      .catch(error => setError(error))
+      .then(pokemonData => {
+        //setPokemon(pokemonData)
+        //setStatus('resolved')
+        setState({...state, pokemon: pokemonData, status: 'resolved'})
+      })
+      .catch(error => {
+        //setError(error)
+        //setStatus('rejected')
+        setState({...state, error: error, status: 'rejected'})
+      })
 
   }, [pokemonName])
 
+  switch(status) {
+    case 'idle':
+      return 'Submit a pokémon'
+
+    case 'pending':
+      return <PokemonInfoFallback name={pokemonName} />
+
+    case 'resolved':
+      return <PokemonDataView pokemon={pokemon} />
+
+    case 'rejected':
+      return (
+        <div role="alert" style={{color: 'red'}}>
+          ERROR: {error.message}
+        </div>
+      )
+  }
+
+  /*
   // Retornou erro
   if(error) return (
     <div role="alert" style={{color: 'red'}}>
@@ -68,7 +118,7 @@ function PokemonInfo({pokemonName}) {
   else if(! pokemon) return <PokemonInfoFallback name={pokemonName} />
   // A chamada à API deu certo: temos um pokemon para exibir
   else return <PokemonDataView pokemon={pokemon} />
-  
+  */
 }
 
 export default function Exercicio06() {
